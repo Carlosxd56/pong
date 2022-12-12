@@ -52,6 +52,32 @@ pygame.display.set_icon(icon)
 # Title
 pygame.display.set_caption("pong game 1.0b")
 
+# Score Variables
+Player_1_score = 0
+Player_2_score = 0
+
+# Score Fonts
+Score_font = pygame.font.Font("04B_30__.TTF", 32)
+
+# Score Position in the screen = Player 1
+player_1_score_x = 10
+player_1_score_y = 10
+
+# Score Position in the screen = Player 2
+player_2_score_x = screen_width - 290
+player_2_score_y = 10
+
+# Player 1 score function
+def show_score_1(x, y):
+    score_1 = Score_font.render("Player 1: " + str(Player_1_score), True, (205,205,205))
+    screen.blit( score_1, (x, y) )
+
+# Player 1 score function
+def show_score_2(x, y):
+    score_2 = Score_font.render("Player 2: " + str(Player_2_score), True, (205,205,205))
+    screen.blit( score_2, (x, y) )
+
+
 # Game loop
 running = True
 while running:
@@ -125,11 +151,14 @@ while running:
     # Ball Boundaries: (right or left) and score update
     if ball_x > screen_width:
 
+        Player_1_score += 1
+
         ball_x = screen_width/2
         ball_y = screen_height/2
         ball_speed_x *= rd.choice((-1, 1))
 
     if ball_x < 0:
+        Player_2_score += 1
         ball_x = screen_width/2
         ball_y = screen_height/2
         ball_speed_x *= rd.choice((-1, 1))
@@ -157,6 +186,12 @@ while running:
 
     if Ball.colliderect(player_2) or Ball.colliderect(player_2):
         ball_speed_x *= -1
+
+    # Call the show_score_1 function
+    show_score_1(player_1_score_x, player_1_score_y)
+
+    # Call the show_score_1 function
+    show_score_1(player_2_score_x, player_2_score_y)
 
     # refresh the windows
     pygame.display.flip()
